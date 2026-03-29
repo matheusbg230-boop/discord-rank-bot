@@ -3,7 +3,8 @@ from discord.ext import commands, tasks
 from flask import Flask, request, jsonify
 from datetime import datetime, timedelta
 from threading import Thread
-from replit import db
+import shelve
+db = shelve.open('/tmp/botdb', writeback=True)
 import json
 import os
 
