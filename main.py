@@ -421,15 +421,13 @@ def webhook():
         valor = float(data.get("valor") or data.get("amount", 0))
         cliente = data.get("cliente") or data.get("customer_name", "Anônimo")
 
-        if not bot_name:
-            return jsonify({"status": "error", "message": "bot_name ausente"}), 400
+        if bot_name and valor > 0:
+            adicionar_venda(bot_name, valor, cliente)
 
-        adicionar_venda(bot_name, valor, cliente)
         return jsonify({"status": "success"}), 200
     except Exception as e:
         print(f"❌ Erro no webhook: {e}")
-        return jsonify({"status": "error", "message": str(e)}), 400
-
+        return jsonify({"status": "success"}), 200
 
 @app.route("/")
 def health():
